@@ -1,7 +1,18 @@
+using Microsoft.EntityFrameworkCore;
+using MyRecipes.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+// Register the DbContext with the dependency injection container
+builder.Services.AddDbContext<MyRecipesDbContext>(options =>
+    options.UseSqlServer(connectionString));
+
+//builder.Services.AddScoped<MyRecipesDbContext>();
 
 var app = builder.Build();
 
